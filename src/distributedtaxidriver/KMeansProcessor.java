@@ -5,11 +5,16 @@
  */
 package distributedtaxidriver;
 
+import distributedtaxidriver.POJO.Cluster;
+import java.util.ArrayList;
+
 /**
  *
  * @author Abhishek
  */
-public class Constants {
-    public static final Integer DEFAULT_PORT = 6004;
-    public static final Double INF = 1000000.0;
+public class KMeansProcessor {
+    ArrayList<Cluster> getClusters(Double timeSlot) {
+     ArrayList<Cluster> results = new ArrayList<>();
+        return results;
+    }
 }

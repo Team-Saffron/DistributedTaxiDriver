@@ -5,12 +5,16 @@
  */
 package distributedtaxidriver;
 
+import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.Driver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,12 +22,20 @@ import java.net.Socket;
  */
 public class Server extends AbstractServer {
    
+    DataProcessor dataProcessor;
+    KMeansProcessor kMeansProcessor;
+    Double currentTimeSlot;
+    ArrayList<Cluster> clusters;
+    
     public Server(int port) {
         super(port);
+        dataProcessor = new DataProcessor();
+        kMeansProcessor = new KMeansProcessor();
+        currentTimeSlot = -1.0 * Constants.INF;
     }
     
     public Server() {
-        super();
+        this(Constants.DEFAULT_PORT);
         System.out.println("Inside Server()");
     }
     
@@ -35,9 +47,25 @@ public class Server extends AbstractServer {
        acceptConnection(serverSocket);
     }
     
-    public String getResult(DataInputStream in) {
-        Driver driver = processInput(in);
-        return "Taxi Driver";
+    public String getResult(DataInputStream in) { 
+       
+        Driver driver = new Driver();
+        try {
+            driver = dataProcessor.processInput(in.readUTF());
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if ((driver.getTime() - 10) > currentTimeSlot) {
+            // Need to reapply K-Means
+            currentTimeSlot = driver.getTime();
+            clusters = kMeansProcessor.getClusters(currentTimeSlot);
+        }
+        
+        Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
+        String stringLatLon = dataProcessor.convertClusterToString(bestClusterId, clusters);
+        
+        return stringLatLon;
     }
 
     public Driver processInput(DataInputStream in) {
