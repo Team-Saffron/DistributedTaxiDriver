@@ -6,6 +6,7 @@
 package distributedtaxidriver;
 
 import distributedtaxidriver.POJO.Cluster;
+import distributedtaxidriver.POJO.DataPoint;
 import distributedtaxidriver.POJO.Driver;
 import java.util.ArrayList;
 
@@ -28,5 +29,38 @@ public class DataProcessor {
     public String convertClusterToString(Integer id, ArrayList<Cluster> clusters) {
         String result = "abc";
         return result;
+    }
+    
+    public ArrayList<DataPoint> getCustData(double time, ArrayList<DataPoint> data)
+    {
+        ArrayList<DataPoint> temp = new ArrayList();
+        int i, pos = 0;
+        for(i=0; i<data.size(); i++)
+        {
+            if(data.get(i).getTime() >=  time)
+            {
+                pos = i;
+                break;
+            }
+        }
+        i = pos;
+        while(i < (pos + Constants.forwardWindowWidth))
+        {
+            i++;
+            DataPoint D =  new DataPoint();
+            D.setLat(data.get(i%data.size()).getLat());
+            D.setLon(data.get(i%data.size()).getLon());
+            temp.add(D);
+        }
+        i = pos;
+        while(i > (pos - Constants.backwardWindowWidth))
+        {
+            i--;
+            DataPoint D = new DataPoint();
+            D.setLat(data.get((i+data.size())%data.size()).getLat());
+            D.setLon(data.get((i+data.size())%data.size()).getLon());
+            temp.add(D);
+        }
+        return temp;
     }
 }
