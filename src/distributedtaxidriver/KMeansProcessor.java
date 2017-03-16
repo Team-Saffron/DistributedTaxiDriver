@@ -24,6 +24,10 @@ public class KMeansProcessor {
     DataProcessor dataProcessor;
     KMeans kMeansObject;
     
+    public KMeansProcessor() {
+        dataProcessor = new DataProcessor();
+        kMeansObject  = new KMeans();
+    }
     ArrayList<Cluster> getClusters(Double timeSlot) {
         ArrayList<Cluster> results;
         ArrayList<DataPoint> clusters;

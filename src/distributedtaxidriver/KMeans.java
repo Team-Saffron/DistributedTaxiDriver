@@ -62,8 +62,8 @@ public class KMeans {
                         if(clusterOf.get(j) ==  i)
                         {
                             counter++;
-                            newCentroid.setLat(newCentroid.getLat() + data.get(j).getLat());
-                            newCentroid.setLon(newCentroid.getLon() + data.get(j).getLon());
+                            newCentroid.setLat(data.get(j).getLat() + newCentroid.getLat());
+                            newCentroid.setLon(data.get(j).getLon() + newCentroid.getLon());
                         }
                     }
                     newCentroid.setLat(newCentroid.getLat() / counter);

@@ -14,6 +14,13 @@ public class DataPoint {
     private Double lon;
     private Double time;
 
+    public DataPoint() {
+        lat = 0.0;
+        lon = 0.0;
+        time = 0.0;
+    }
+
+    
     public Double getLat() {
         return lat;
     }

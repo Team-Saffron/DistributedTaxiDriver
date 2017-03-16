@@ -65,8 +65,14 @@ public class Server extends AbstractServer {
         if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
             currentTimeSlot = driver.getTime();
             System.out.println("Re-applying K-means....\nNew time slot: " + currentTimeSlot);
-            //clusters = kMeansProcessor.getClusters(currentTimeSlot);
+            clusters = kMeansProcessor.getClusters(currentTimeSlot);
         }
+        Integer n = clusters.size();
+        System.out.println("\n\nNew Cluster details:\n");
+        for (int i = 0; i < n; i++) {
+            System.out.println(clusters.get(i));
+        }
+ 
         /*
         Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
         stringLatLon = dataProcessor.convertClusterToString(bestClusterId, clusters);

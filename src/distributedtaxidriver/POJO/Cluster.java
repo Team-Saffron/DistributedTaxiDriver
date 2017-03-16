@@ -51,6 +51,15 @@ public class Cluster {
     public void setCentroidLongitude(Double centroidLongitude) {
         this.centroidLongitude = centroidLongitude;
     }
+    @Override
+    public String toString() {
+        return "Cluster{" + "lat=" + centroidLatitude 
+                + ", lon=" + centroidLongitude 
+                + ", drivers=" + drivers
+                + ", densty=" + crowdDensity
+                + ", Crowd=" + crowdCount
+                + "}";
+    }
     private Double crowdDensity;
     private Double crowdCount;
     private Integer drivers;
