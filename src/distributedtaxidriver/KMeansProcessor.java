@@ -42,6 +42,23 @@ public class KMeansProcessor {
     
     ArrayList<Cluster> packResults(ArrayList<DataPoint> clusters, ArrayList<Integer> crowdAtEachCluster, ArrayList<Double> densityAtEachCluster) {
         ArrayList<Cluster> result = new ArrayList<>();
+        
+        Integer numberOfClusters = clusters.size();
+        
+        if (crowdAtEachCluster.size() != numberOfClusters || densityAtEachCluster.size() != numberOfClusters) {
+            System.err.println("Number of clusters mismatch!!!\n Aborting!!");
+        } else {
+            for (int i = 0; i < numberOfClusters; i++) {
+                Cluster tempCluster = new Cluster();
+                tempCluster.setCentroidLatitude(clusters.get(i).getLat());
+                tempCluster.setCentroidLongitude(clusters.get(i).getLon());
+                tempCluster.setCrowdCount((double)crowdAtEachCluster.get(i));
+                tempCluster.setCrowdDensity(densityAtEachCluster.get(i));
+                tempCluster.setDrivers(0);
+                
+                result.add(tempCluster);
+            }
+        }
         return result;
     }
     private void loadData() {

@@ -36,22 +36,6 @@ public class Cluster {
         this.drivers = drivers;
     }
 
-    public Double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Double distance) {
-        this.distance = distance;
-    }
-
-    public Double getTimeToReachCenter() {
-        return timeToReachCenter;
-    }
-
-    public void setTimeToReachCenter(Double timeToReachCenter) {
-        this.timeToReachCenter = timeToReachCenter;
-    }
-
     public Double getCentroidLatitude() {
         return centroidLatitude;
     }
@@ -70,8 +54,6 @@ public class Cluster {
     private Double crowdDensity;
     private Double crowdCount;
     private Integer drivers;
-    private Double distance;
-    private Double timeToReachCenter;
     private Double centroidLatitude;
     private Double centroidLongitude;
 }

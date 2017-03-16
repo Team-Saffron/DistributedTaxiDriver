@@ -50,30 +50,29 @@ public class Server extends AbstractServer {
     public String getResult(DataInputStream in) { 
        
         Driver driver = new Driver();
+        String stringLatLon = "Hello! CLientG";
         try {
             driver = dataProcessor.processInput(in.readUTF());
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if ((driver.getTime() - 10) > currentTimeSlot) {
-            // Need to reapply K-Means
+        System.out.println("Currently Processing Client: " 
+                + driver.getLatitude() + "," 
+                + driver.getLongitude() + "," 
+                + driver.getTime());
+        
+        if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
             currentTimeSlot = driver.getTime();
-            clusters = kMeansProcessor.getClusters(currentTimeSlot);
+            System.out.println("Re-applying K-means....\nNew time slot: " + currentTimeSlot);
+            //clusters = kMeansProcessor.getClusters(currentTimeSlot);
         }
-        
+        /*
         Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
-        String stringLatLon = dataProcessor.convertClusterToString(bestClusterId, clusters);
-        
+        stringLatLon = dataProcessor.convertClusterToString(bestClusterId, clusters);
+        */
         return stringLatLon;
     }
-
-    public Driver processInput(DataInputStream in) {
-        Driver driver = new Driver();
-        // Code for parsing input and set Time.
-        return driver;
-    }
-    
     
     public void acceptConnection(ServerSocket serverSocket) {
         // Recieve requests till infinity

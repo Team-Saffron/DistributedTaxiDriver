@@ -9,15 +9,32 @@ import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.DataPoint;
 import distributedtaxidriver.POJO.Driver;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * TODO Make it singleton
  * @author Abhishek
  */
 public class DataProcessor {
+    
+    /**
+     * Parse string and get time to identify driver
+     * @param in String to be parsed
+     * @return 
+     */
     public Driver processInput(String in) {
         Driver driver = new Driver();
+        Calendar calendar = Calendar.getInstance();
         // Process input stream to get Lat, Lon and add server time
+
+        Double timeInMinutes = (calendar.get(Calendar.HOUR_OF_DAY) * 60.0) + (calendar.get(Calendar.MINUTE));
+        String[] latLon = in.split(",");
+        
+        System.out.println("Request is received at:" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
+        
+        driver.setTime(timeInMinutes);
+        driver.setLatitude(Double.parseDouble(latLon[0]));
+        driver.setLongitude(Double.parseDouble(latLon[1]));
         
         return driver;
     }

@@ -16,4 +16,5 @@ public class Constants {
     public static final Integer forwardWindowWidth = 1500;
     public static final Integer backwardWindowWidth = 500;
     public static final Integer NUMBER_OF_CLUSTERS = 12;
+    public static final Integer REAPPLY_DURATION = 10;
 }
