@@ -50,7 +50,7 @@ public class Server extends AbstractServer {
     public String getResult(DataInputStream in) { 
        
         Driver driver = new Driver();
-        String stringLatLon = "Hello! CLientG";
+        String stringLatLon = "Hello! Client";
         try {
             driver = dataProcessor.processInput(in.readUTF());
         } catch (IOException ex) {
@@ -73,10 +73,14 @@ public class Server extends AbstractServer {
             System.out.println(clusters.get(i));
         }
  
-        /*
+        
         Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
-        stringLatLon = dataProcessor.convertClusterToString(bestClusterId, clusters);
-        */
+        
+        // Increment number of drivers in cluster
+        clusters.get(bestClusterId).setDrivers(clusters.get(bestClusterId).getDrivers() + 1);
+        
+        stringLatLon = dataProcessor.convertClusterToString(clusters.get(bestClusterId));
+        
         return stringLatLon;
     }
     

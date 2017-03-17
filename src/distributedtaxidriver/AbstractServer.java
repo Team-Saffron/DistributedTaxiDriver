@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * @author Abhishek
  */
 public abstract class AbstractServer {
-    ServerSocket serverSocket;
-    Integer port;
+    private ServerSocket serverSocket;
+    private Integer port;
     
     public ServerSocket getServerSocket() {
         return serverSocket;

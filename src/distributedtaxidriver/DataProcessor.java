@@ -40,11 +40,50 @@ public class DataProcessor {
     }
     
     public Integer getBestCluster(ArrayList<Cluster> clusters, Driver driver) {
-        return 0;
+        Integer numberOfClusters = clusters.size();
+        Integer resultId = 0;
+        Double maxHypothesisValue = -1.0 * Constants.INF;
+        
+        for (int i = 0; i < numberOfClusters; i++) {
+            Double hypothesis = getHypothesisValue(clusters.get(i), driver);
+            
+            if (hypothesis > maxHypothesisValue) {
+                maxHypothesisValue = hypothesis;
+                resultId = i;
+            }
+        }
+        return resultId;
     }
     
-    public String convertClusterToString(Integer id, ArrayList<Cluster> clusters) {
-        String result = "abc";
+    private Double getHypothesisValue(Cluster cluster, Driver driver) {
+        MapNode mapNode = new MapNode(driver.getLatitude(), driver.getLongitude(), parseLatitude(cluster.getCentroidLatitude()), parseLongitude(cluster.getCentroidLongitude()));
+        MapEngine googleMaps = new MapEngine(mapNode);
+        Double distanceFromSource, timeFromSource, hypothesisValue;
+        
+        distanceFromSource = googleMaps.getDistance();
+        timeFromSource = googleMaps.getTime();
+        
+        hypothesisValue = calculateHypothesis(distanceFromSource, timeFromSource, driver);
+        return hypothesisValue;
+    }
+    
+    private Double parseLatitude (Double latitude) {
+        Double divisor = 1000000.0;
+        Double rLatitude = (latitude/divisor) + 37;
+        return rLatitude;
+    }
+    
+    private Double parseLongitude (Double longitude) {
+        Double divisor = 1000000.0;
+        Double rLongitude = -1 * ((longitude / divisor) + 122);
+        return rLongitude;
+    }
+    
+    private Double calculateHypothesis(Double distance, Double timeFromSource, Driver driver) {
+        return 0.0;
+    }
+    public String convertClusterToString(Cluster bestCluster) {
+        String result = bestCluster.getCentroidLatitude() + "," + bestCluster.getCentroidLongitude();
         return result;
     }
     
