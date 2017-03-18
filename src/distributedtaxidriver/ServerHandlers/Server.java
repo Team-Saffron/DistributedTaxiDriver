@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.ServerHandlers;
 
+import distributedtaxidriver.Constants.Constants;
+import distributedtaxidriver.DataProcessor;
+import distributedtaxidriver.KMeansHandlers.KMeansProcessor;
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.Driver;
+import distributedtaxidriver.OutputHandlers.ServerOutputManager;
 import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -67,10 +71,11 @@ public class Server extends AbstractServer {
         
         if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
             currentTimeSlot = driver.getTime();
-            serverOutputManager.write("\nRe-applying K-means....\nNew time slot: " + currentTimeSlot);
+            serverOutputManager.write("\nRe-applying K-means....\n", Color.green);
+            serverOutputManager.write("New time slot: " + currentTimeSlot);
             clusters = kMeansProcessor.getClusters(currentTimeSlot);
         } else {
-            serverOutputManager.write("\nUsing previous Clusters....");
+            serverOutputManager.write("\nUsing previous Clusters....", Color.green);
         }
         Integer n = clusters.size();
         serverOutputManager.write("\n\nNew Cluster details:\n");

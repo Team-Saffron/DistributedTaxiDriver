@@ -1,4 +1,4 @@
-package distributedtaxidriver;
+package distributedtaxidriver.OutputHandlers;
  
 import java.awt.Color;
 import java.io.IOException;
@@ -15,10 +15,10 @@ import javax.swing.text.StyledDocument;
  * @author Abhishek
  *
  */
-public class CustomErrorStream extends OutputStream {
+public class CustomOutputStream extends OutputStream {
     private JTextPane textPane;
     
-    public CustomErrorStream(JTextPane textPane) {
+    public CustomOutputStream(JTextPane textPane) {
         this.textPane = textPane;
     }
      
@@ -29,7 +29,7 @@ public class CustomErrorStream extends OutputStream {
         StyledDocument doc = textPane.getStyledDocument();
 
         Style style = textPane.addStyle("I'm a Style", null);
-        StyleConstants.setForeground(style, Color.red);
+        StyleConstants.setForeground(style, Color.green);
 
         try { 
             doc.insertString(doc.getLength(), Character.toString((char) b),style); 

@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.KMeansHandlers;
 
+import distributedtaxidriver.KMeansHandlers.KMeans;
+import distributedtaxidriver.Constants.Constants;
+import distributedtaxidriver.DataProcessor;
+import distributedtaxidriver.OutputHandlers.ServerOutputManager;
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.DataPoint;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -23,12 +28,13 @@ public class KMeansProcessor {
     ArrayList<DataPoint> data;
     DataProcessor dataProcessor;
     KMeans kMeansObject;
+    ServerOutputManager outputManager = ServerOutputManager.getSingletonInstance();
     
     public KMeansProcessor() {
         dataProcessor = new DataProcessor();
         kMeansObject  = new KMeans();
     }
-    ArrayList<Cluster> getClusters(Double timeSlot) {
+    public ArrayList<Cluster> getClusters(Double timeSlot) {
         ArrayList<Cluster> results;
         ArrayList<DataPoint> clusters;
         ArrayList<Integer> crowdAtEachCluster;
@@ -46,7 +52,7 @@ public class KMeansProcessor {
     
     ArrayList<Cluster> packResults(ArrayList<DataPoint> clusters, ArrayList<Integer> crowdAtEachCluster, ArrayList<Double> densityAtEachCluster) {
         ArrayList<Cluster> result = new ArrayList<>();
-        
+        outputManager.write("Packing resultant clusters....", Color.green);
         Integer numberOfClusters = clusters.size();
         
         if (crowdAtEachCluster.size() != numberOfClusters || densityAtEachCluster.size() != numberOfClusters) {

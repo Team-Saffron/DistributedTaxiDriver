@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.OutputHandlers;
 
+import distributedtaxidriver.OutputHandlers.CustomOutputStream;
+import distributedtaxidriver.OutputHandlers.CustomErrorStream;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;

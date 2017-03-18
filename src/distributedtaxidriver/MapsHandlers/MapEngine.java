@@ -1,4 +1,4 @@
-package distributedtaxidriver;
+package distributedtaxidriver.MapsHandlers;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,7 +11,7 @@ public class MapEngine {
     private String srcAddress, destAddress,polyLine;
     private MapNode node;
     
-    MapEngine(MapNode m)
+    public MapEngine(MapNode m)
     {
          node = m;
          time = -1;
@@ -22,7 +22,7 @@ public class MapEngine {
 
     private void setTimeAndDistance()
     {
-        Obj =  Utility.requestJSON(node, 0);
+        Obj =  MapUtility.requestJSON(node, 0);
         JSONArray destination_address = (JSONArray)Obj.get("destination_addresses");
         JSONArray origin_address = (JSONArray)Obj.get("origin_addresses");
         
@@ -44,7 +44,7 @@ public class MapEngine {
     
     private void setPolyLine()
     {
-        Obj =  Utility.requestJSON(node, 1);
+        Obj =  MapUtility.requestJSON(node, 1);
         JSONArray routes = (JSONArray)Obj.get("routes");
         JSONObject temp = (JSONObject)routes.get(0);
         JSONObject pl = (JSONObject)temp.get("overview_polyline");
@@ -85,7 +85,7 @@ public class MapEngine {
     }
     public void makeMap()
     {
-        Utility.makeMap(node,2,getPolyLine());
+        MapUtility.makeMap(node,2,getPolyLine());
     } 
     public String displayMap() throws Exception
     {

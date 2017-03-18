@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.MapsHandlers;
 
+import distributedtaxidriver.MapsHandlers.MapNode;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,7 +17,7 @@ import org.json.simple.parser.JSONParser;
  *
  * @author archit08jain
  */
-public class Utility {
+public class MapUtility {
     
     public static JSONParser parser= new JSONParser();
    

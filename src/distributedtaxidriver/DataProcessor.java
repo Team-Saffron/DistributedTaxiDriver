@@ -5,9 +5,14 @@
  */
 package distributedtaxidriver;
 
+import distributedtaxidriver.MapsHandlers.MapNode;
+import distributedtaxidriver.MapsHandlers.MapEngine;
+import distributedtaxidriver.Constants.Constants;
+import distributedtaxidriver.OutputHandlers.ServerOutputManager;
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.DataPoint;
 import distributedtaxidriver.POJO.Driver;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -16,7 +21,7 @@ import java.util.Calendar;
  * @author Abhishek
  */
 public class DataProcessor {
-    
+    ServerOutputManager outputManager = ServerOutputManager.getSingletonInstance();
     /**
      * Parse string and get time to identify driver
      * @param in String to be parsed
@@ -44,18 +49,21 @@ public class DataProcessor {
         Integer resultId = 0;
         Double maxHypothesisValue = -1.0 * Constants.INF;
         
+        outputManager.write("\nStarting Google Maps calls", Color.green);
         for (int i = 0; i < numberOfClusters; i++) {
             Double hypothesis = getHypothesisValue(clusters.get(i), driver);
-            
+            outputManager.write(".........." + (numberOfClusters - i) + " Remaining", Color.green);
             if (hypothesis > maxHypothesisValue) {
                 maxHypothesisValue = hypothesis;
                 resultId = i;
             }
         }
+        outputManager.write("\nCompleted Google Maps calls", Color.green);
         return resultId;
     }
     
     private Double getHypothesisValue(Cluster cluster, Driver driver) {
+        
         MapNode mapNode = new MapNode(driver.getLatitude(), driver.getLongitude(), parseLatitude(cluster.getCentroidLatitude()), parseLongitude(cluster.getCentroidLongitude()));
         MapEngine googleMaps = new MapEngine(mapNode);
         Double distanceFromSource, timeFromSource, hypothesisValue;

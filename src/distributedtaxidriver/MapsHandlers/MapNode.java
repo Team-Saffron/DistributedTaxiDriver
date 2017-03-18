@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.MapsHandlers;
 
 import distributedtaxidriver.POJO.DataPoint;
 
@@ -13,14 +13,14 @@ import distributedtaxidriver.POJO.DataPoint;
  */
 public class MapNode {
     double sLat,sLon,dLat,dLon;
-    MapNode(double sLat,double sLon,double dLat,double dLon)
+    public MapNode(double sLat,double sLon,double dLat,double dLon)
     {
         this.sLat = sLat;
         this.sLon = sLon;
         this.dLat = dLat;
         this.dLon = dLon;
     }
-    MapNode(DataPoint d1,DataPoint d2)
+    public MapNode(DataPoint d1,DataPoint d2)
     {
         this.sLat = d1.getLat();
         this.sLon = d1.getLon();

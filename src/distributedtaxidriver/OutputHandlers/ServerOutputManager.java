@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributedtaxidriver;
+package distributedtaxidriver.OutputHandlers;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -40,10 +40,11 @@ public class ServerOutputManager {
         // redirects data to the text area 
 
         Style style = textPane.addStyle("I'm a Style", null);
-        StyleConstants.setForeground(style, Color.blue);
+        StyleConstants.setForeground(style, Color.cyan);
 
         try { 
             doc.insertString(doc.getLength(), input, style); 
+            doc.insertString(doc.getLength(), "\n", style); 
         } catch (BadLocationException e){
             System.err.println(e);
         }
@@ -57,6 +58,7 @@ public class ServerOutputManager {
 
         try { 
             doc.insertString(doc.getLength(), input, style); 
+            doc.insertString(doc.getLength(), "\n", style); 
         } catch (BadLocationException e){
             System.err.println(e);
         }
