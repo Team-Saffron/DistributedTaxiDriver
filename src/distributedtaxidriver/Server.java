@@ -7,6 +7,7 @@ package distributedtaxidriver;
 
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.Driver;
+import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -26,12 +27,14 @@ public class Server extends AbstractServer {
     KMeansProcessor kMeansProcessor;
     Double currentTimeSlot;
     ArrayList<Cluster> clusters;
+    ServerOutputManager serverOutputManager;
     
     public Server(int port) {
         super(port);
         dataProcessor = new DataProcessor();
         kMeansProcessor = new KMeansProcessor();
         currentTimeSlot = -1.0 * Constants.INF;
+        serverOutputManager = ServerOutputManager.getSingletonInstance();
     }
     
     public Server() {
@@ -50,29 +53,29 @@ public class Server extends AbstractServer {
     public String getResult(DataInputStream in) { 
        
         Driver driver = new Driver();
-        String stringLatLon = "Hello! Client";
+        String stringLatLon;
         try {
             driver = dataProcessor.processInput(in.readUTF());
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        System.out.println("Currently Processing Client: " 
+        serverOutputManager.write("Currently Processing Client: " 
                 + driver.getLatitude() + "," 
                 + driver.getLongitude() + "," 
                 + driver.getTime());
         
         if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
             currentTimeSlot = driver.getTime();
-            System.err.println("\nRe-applying K-means....\nNew time slot: " + currentTimeSlot);
+            serverOutputManager.write("\nRe-applying K-means....\nNew time slot: " + currentTimeSlot);
             clusters = kMeansProcessor.getClusters(currentTimeSlot);
         } else {
-            System.out.println("\nUsing previous Clusters....");
+            serverOutputManager.write("\nUsing previous Clusters....");
         }
         Integer n = clusters.size();
-        System.out.println("\n\nNew Cluster details:\n");
+        serverOutputManager.write("\n\nNew Cluster details:\n");
         for (int i = 0; i < n; i++) {
-            System.out.println(clusters.get(i));
+            serverOutputManager.write(clusters.get(i).toString());
         }
  
         

@@ -13,32 +13,38 @@ import java.io.PrintStream;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 /**
  *
  * @author Abhishek
  */
 public class ServerOutput extends JFrame {
-    private JTextArea textArea;
+    private JTextPane textPane;
     
     private PrintStream standardOut;
     private PrintStream standardErr;
     
     public void execute() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(700, 600);
+        this.setSize(1000, 800);
         initComponents();
         this.setVisible(true);
     }
     private void initComponents() {
-        textArea = new JTextArea(50, 10);
-        textArea.setEditable(false);
-        textArea.setBackground(Color.black);
-        textArea.setFont(new Font("Lucida Sans", Font.BOLD, 15));
-        textArea.setForeground(Color.green);
+        textPane = new JTextPane();
+        textPane.setEditable(false);
+        textPane.setBackground(Color.black);
+        textPane.setFont(new Font("Lucida Console", Font.PLAIN, 15));
+        textPane.setForeground(Color.green);
         
-        PrintStream outputPrintStream = new PrintStream(new CustomOutputStream(textArea));
-        PrintStream errorPrintStream = new PrintStream(new CustomErrorStream(textArea));
+        /**
+         * Set Text pane
+         */
+        PrintStream outputPrintStream = new PrintStream(new CustomOutputStream(textPane));
+        PrintStream errorPrintStream = new PrintStream(new CustomErrorStream(textPane));
+        ServerOutputManager serverOutputManager = ServerOutputManager.getSingletonInstance();
+        serverOutputManager.setTextPane(textPane);
         // keeps reference of standard output stream
         standardOut = System.out;
         standardErr = System.err; 
@@ -56,6 +62,6 @@ public class ServerOutput extends JFrame {
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         
-        this.add(new JScrollPane(textArea), constraints);
+        this.add(new JScrollPane(textPane), constraints);
     }
 }
