@@ -15,8 +15,13 @@ public class DistributedTaxiDriver {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+       new DistributedTaxiDriver().start();
+    }
+    
+    public void start() {
+        ServerOutput serverOutput = new ServerOutput();
+        serverOutput.execute();
         AbstractServer server = new Server();
         server.startServer();
     }
-    
 }

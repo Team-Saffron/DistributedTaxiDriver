@@ -63,7 +63,7 @@ public class DataProcessor {
         distanceFromSource = googleMaps.getDistance();
         timeFromSource = googleMaps.getTime();
         
-        hypothesisValue = calculateHypothesis(distanceFromSource, timeFromSource, driver);
+        hypothesisValue = calculateHypothesis(distanceFromSource, timeFromSource, cluster);
         return hypothesisValue;
     }
     
@@ -79,8 +79,8 @@ public class DataProcessor {
         return rLongitude;
     }
     
-    private Double calculateHypothesis(Double distance, Double timeFromSource, Driver driver) {
-        return 0.0;
+    private Double calculateHypothesis(Double distance, Double timeFromSource, Cluster cluster) {
+        return ((cluster.getCrowdCount() * cluster.getCrowdDensity()) / (((distance * timeFromSource) + (cluster.getDrivers() * 1000))) + 1);
     }
     public String convertClusterToString(Cluster bestCluster) {
         String result = bestCluster.getCentroidLatitude() + "," + bestCluster.getCentroidLongitude();

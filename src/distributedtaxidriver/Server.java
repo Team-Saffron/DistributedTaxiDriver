@@ -64,8 +64,10 @@ public class Server extends AbstractServer {
         
         if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
             currentTimeSlot = driver.getTime();
-            System.out.println("Re-applying K-means....\nNew time slot: " + currentTimeSlot);
+            System.err.println("\nRe-applying K-means....\nNew time slot: " + currentTimeSlot);
             clusters = kMeansProcessor.getClusters(currentTimeSlot);
+        } else {
+            System.out.println("\nUsing previous Clusters....");
         }
         Integer n = clusters.size();
         System.out.println("\n\nNew Cluster details:\n");
@@ -104,6 +106,7 @@ public class Server extends AbstractServer {
                     + "\nYour ouput is:" + output
                     + "\nGoodbye!");
                 
+                System.out.println("\n\nSuccessfully Processed client...\n\n");
             } catch (IOException exception) {
                 System.err.println("Received IO exception while waiting for Connection" + exception.getMessage());
             }
