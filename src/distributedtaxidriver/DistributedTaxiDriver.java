@@ -21,7 +21,7 @@ public class DistributedTaxiDriver {
     public static void main(String[] args) {
        new DistributedTaxiDriver().start();
     }
-    
+
     public void start() {
         ServerOutput serverOutput = new ServerOutput();
         serverOutput.execute();

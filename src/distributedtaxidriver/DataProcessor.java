@@ -62,6 +62,15 @@ public class DataProcessor {
         return resultId;
     }
     
+    public void updateClusters(ArrayList<Cluster> clusters) {
+        for (Cluster cluster: clusters) {
+            convertClusterToDelhi(cluster);
+        }
+    }
+    private void convertClusterToDelhi(Cluster cluster) {
+        cluster.setCentroidLatitude(parseLatitude(cluster.getCentroidLatitude()) + Constants.Delhi_Lat - Constants.San_Lat);
+        cluster.setCentroidLongitude(parseLongitude(cluster.getCentroidLongitude()) + Constants.Delhi_Lon - Constants.San_Lon);
+    }
     private Double getHypothesisValue(Cluster cluster, Driver driver) {
         
         MapNode mapNode = new MapNode(driver.getLatitude(), driver.getLongitude(), parseLatitude(cluster.getCentroidLatitude()), parseLongitude(cluster.getCentroidLongitude()));

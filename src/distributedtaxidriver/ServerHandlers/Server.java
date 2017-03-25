@@ -74,15 +74,16 @@ public class Server extends AbstractServer {
             serverOutputManager.write("\nRe-applying K-means....\n", Color.green);
             serverOutputManager.write("New time slot: " + currentTimeSlot);
             clusters = kMeansProcessor.getClusters(currentTimeSlot);
+            dataProcessor.updateClusters(clusters);
         } else {
             serverOutputManager.write("\nUsing previous Clusters....", Color.green);
         }
         Integer n = clusters.size();
         serverOutputManager.write("\n\nNew Cluster details:\n");
         for (int i = 0; i < n; i++) {
-            serverOutputManager.write(clusters.get(i).toString());
+            serverOutputManager.write(clusters.get(i).toString(), Color.ORANGE);
         }
- 
+
         
         Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
         
@@ -110,9 +111,8 @@ public class Server extends AbstractServer {
                 output = getResult(in);
                 
                 DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress()
-                    + "\nYour ouput is:" + output
-                    + "\nGoodbye!");
+                serverOutputManager.write(output);
+                out.writeUTF(output);
                 
                 System.out.println("\n\nSuccessfully Processed client...\n\n");
             } catch (IOException exception) {
