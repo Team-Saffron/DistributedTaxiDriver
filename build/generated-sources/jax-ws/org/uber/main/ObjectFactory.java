@@ -51,6 +51,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Cluster }
+     * 
+     */
+    public Cluster createCluster() {
+        return new Cluster();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetDestinationCoordinatesResponse }{@code >}}
      * 
      */

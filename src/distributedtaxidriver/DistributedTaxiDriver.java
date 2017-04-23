@@ -23,12 +23,9 @@ public class DistributedTaxiDriver {
     }
 
     public void start() {
-        
-        WebServiceInteractionInterface service = new WebServiceInteractionInterface("28.7050463,77.1615928",1340.0);
-        System.out.print(service.getBestDestination());
-        /*ServerOutput serverOutput = new ServerOutput();
+        ServerOutput serverOutput = new ServerOutput();
         serverOutput.execute();
         AbstractServer server = new Server();
-        server.startServer();*/
+        server.startServer();
     }
 }

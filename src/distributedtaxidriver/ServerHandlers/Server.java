@@ -11,7 +11,6 @@ import distributedtaxidriver.KMeansHandlers.KMeansProcessor;
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.Driver;
 import distributedtaxidriver.OutputHandlers.ServerOutputManager;
-import distributedtaxidriver.WebServiceInteractionInterface;
 import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -33,7 +32,6 @@ public class Server extends AbstractServer {
     Double currentTimeSlot;
     ArrayList<Cluster> clusters;
     ServerOutputManager serverOutputManager;
-
     
     public Server(int port) {
         super(port);
@@ -58,7 +56,6 @@ public class Server extends AbstractServer {
     
     public String getResult(DataInputStream in) { 
        
-        
         Driver driver = new Driver();
         String stringLatLon;
         try {
@@ -71,11 +68,31 @@ public class Server extends AbstractServer {
                 + driver.getLatitude() + "," 
                 + driver.getLongitude() + "," 
                 + driver.getTime());
-       
-        String data = ""+driver.getLatitude() + driver.getLongitude();
-        WebServiceInteractionInterface service;
-        service = new WebServiceInteractionInterface(data,driver.getTime());
-        return service.getBestDestination();
+        
+        if ((driver.getTime() - Constants.REAPPLY_DURATION) > currentTimeSlot) {    
+            currentTimeSlot = driver.getTime();
+            serverOutputManager.write("\nRe-applying K-means....\n", Color.green);
+            serverOutputManager.write("New time slot: " + currentTimeSlot);
+            clusters = kMeansProcessor.getClusters(currentTimeSlot);
+            dataProcessor.updateClusters(clusters);
+        } else {
+            serverOutputManager.write("\nUsing previous Clusters....", Color.green);
+        }
+        Integer n = clusters.size();
+        serverOutputManager.write("\n\nNew Cluster details:\n");
+        for (int i = 0; i < n; i++) {
+            serverOutputManager.write(clusters.get(i).toString(), Color.ORANGE);
+        }
+
+        
+        Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
+        
+        // Increment number of drivers in cluster
+        clusters.get(bestClusterId).setDrivers(clusters.get(bestClusterId).getDrivers() + 1);
+        
+        stringLatLon = dataProcessor.convertClusterToString(clusters.get(bestClusterId));
+        
+        return stringLatLon;
     }
     
     public void acceptConnection(ServerSocket serverSocket) {

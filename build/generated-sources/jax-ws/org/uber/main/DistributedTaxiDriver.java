@@ -1,6 +1,7 @@
 
 package org.uber.main;
 
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -29,17 +30,17 @@ public interface DistributedTaxiDriver {
      * @param arg1
      * @param arg0
      * @return
-     *     returns java.lang.String
+     *     returns java.lang.Integer
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getDestinationCoordinates", targetNamespace = "http://main.uber.org/", className = "org.uber.main.GetDestinationCoordinates")
     @ResponseWrapper(localName = "getDestinationCoordinatesResponse", targetNamespace = "http://main.uber.org/", className = "org.uber.main.GetDestinationCoordinatesResponse")
     @Action(input = "http://main.uber.org/DistributedTaxiDriver/getDestinationCoordinatesRequest", output = "http://main.uber.org/DistributedTaxiDriver/getDestinationCoordinatesResponse")
-    public String getDestinationCoordinates(
+    public Integer getDestinationCoordinates(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
-        Double arg1);
+        List<Cluster> arg1);
 
 }

@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "DistributedTaxiDriver", targetNamespace = "http://main.uber.org/", wsdlLocation = "https://archit:8181/SlaveDistributedTaxiDriver/DistributedTaxiDriver?wsdl")
+@WebServiceClient(name = "DistributedTaxiDriver", targetNamespace = "http://main.uber.org/", wsdlLocation = "http://abhishek-pc:8080/SlaveTaxiDriverWebService/DistributedTaxiDriver?wsdl")
 public class DistributedTaxiDriver_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class DistributedTaxiDriver_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://archit:8181/SlaveDistributedTaxiDriver/DistributedTaxiDriver?wsdl");
+            url = new URL("http://abhishek-pc:8080/SlaveTaxiDriverWebService/DistributedTaxiDriver?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -18,8 +18,8 @@
     </target>
     <target name="wsimport-client-DistributedTaxiDriver" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver"/>
-        <property name="wsdl-DistributedTaxiDriver" location="xml-resources/web-service-references/DistributedTaxiDriver/wsdl/archit_8181/SlaveDistributedTaxiDriver/DistributedTaxiDriver.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver" destdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver" wsdl="${wsdl-DistributedTaxiDriver}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="https://archit:8181/SlaveDistributedTaxiDriver/DistributedTaxiDriver?wsdl" xnocompile="true" xendorsed="true">
+        <property name="wsdl-DistributedTaxiDriver" location="xml-resources/web-service-references/DistributedTaxiDriver/wsdl/abhishek-pc_8080/SlaveTaxiDriverWebService/DistributedTaxiDriver.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver" destdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver" wsdl="${wsdl-DistributedTaxiDriver}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://abhishek-pc:8080/SlaveTaxiDriverWebService/DistributedTaxiDriver?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-DistributedTaxiDriver}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver"/>
         </wsimport>
@@ -33,22 +33,5 @@
         <delete dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/org/uber/main"/>
     </target>
-    <target name="wsimport-client-DistributedTaxiDriver_1" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1"/>
-        <property name="wsdl-DistributedTaxiDriver_1" location="xml-resources/web-service-references/DistributedTaxiDriver_1/wsdl/archit_8080/SlaveDistributedTaxiDriver/DistributedTaxiDriver.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1" destdir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1" wsdl="${wsdl-DistributedTaxiDriver_1}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://archit:8080/SlaveDistributedTaxiDriver/DistributedTaxiDriver?wsdl" xnocompile="true" xendorsed="true">
-            <depends file="${wsdl-DistributedTaxiDriver_1}"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-DistributedTaxiDriver_1" depends="-init-project">
-        <delete dir="${build.generated.dir}/jax-wsCache/DistributedTaxiDriver_1"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/org/uber/main"/>
-    </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-DistributedTaxiDriver, wsimport-client-DistributedTaxiDriver_1"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-DistributedTaxiDriver"/>
 </project>
