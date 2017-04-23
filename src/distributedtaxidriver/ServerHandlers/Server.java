@@ -11,6 +11,7 @@ import distributedtaxidriver.KMeansHandlers.KMeansProcessor;
 import distributedtaxidriver.POJO.Cluster;
 import distributedtaxidriver.POJO.Driver;
 import distributedtaxidriver.OutputHandlers.ServerOutputManager;
+import distributedtaxidriver.SlaveHandlers.SlaveHandler;
 import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -56,14 +57,15 @@ public class Server extends AbstractServer {
     
     public String getResult(DataInputStream in) { 
        
-        Driver driver = new Driver();
-        String stringLatLon;
+        Driver driver;
+        String stringLatLon, driverLatLon = "";
+       
         try {
-            driver = dataProcessor.processInput(in.readUTF());
+            driverLatLon = in.readUTF();
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        driver = dataProcessor.processInput(driverLatLon);
         serverOutputManager.write("Currently Processing Client: " 
                 + driver.getLatitude() + "," 
                 + driver.getLongitude() + "," 
@@ -84,9 +86,12 @@ public class Server extends AbstractServer {
             serverOutputManager.write(clusters.get(i).toString(), Color.ORANGE);
         }
 
+        Integer serviceResult = SlaveHandler.getDestinationId(driverLatLon, clusters);       
         
         Integer bestClusterId = dataProcessor.getBestCluster(clusters, driver);
-        
+        serverOutputManager.write("Service result: " + serviceResult);
+        serverOutputManager.write("Master result: " + bestClusterId);
+    
         // Increment number of drivers in cluster
         clusters.get(bestClusterId).setDrivers(clusters.get(bestClusterId).getDrivers() + 1);
         
